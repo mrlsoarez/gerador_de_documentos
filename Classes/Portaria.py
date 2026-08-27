@@ -61,8 +61,6 @@ class Portaria(Documento):
         self.tce = mapeamento["tce"]
         self.valor = f"{mapeamento["valor"]} ({pegar_numero_extenso(mapeamento['valor'])})"
         
-        
-
     def criar_documento(self):
         doc = Document(self.modelo)
                     

@@ -12,6 +12,7 @@ from Entities.Secretaria import Secretaria
 from Classes.Documento import Documento
 from Classes.Apostilamento import Apostilamento
 from Classes.Portaria import Portaria
+from Classes.Contrato import Contrato
 
 def env():
     return {
@@ -47,7 +48,7 @@ def iniciar(sheet):
             "modulos": {
                 "portaria": {"inicializar_modulo": sheet["B22"].value, "classe": Portaria, "planilha": f"{enderecos['planilhas']}\PORTARIA.xlsx"},
                 "termo_aditivo": {"inicializar_modulo": sheet["B23"].value, "classe": ""},
-                "contrato": {"inicializar_modulo": sheet["B24"].value, "classe": ""},
+                "contrato": {"inicializar_modulo": sheet["B24"].value, "classe": Contrato, "planilha": f"{enderecos['planilhas']}\CONTRATO.xlsx"},
                 "apostilamento": {"inicializar_modulo": sheet["B25"].value, "classe": Apostilamento, "planilha": f"{enderecos['planilhas']}\APOSTILAMENTO.xlsx"},
                 "reequilibrio": {"inicializar_modulo": sheet["B26"].value, "classe": ""}
             }
@@ -57,7 +58,7 @@ def iniciar(sheet):
         print()
     
     info_inicial = mapa(sheet)  
-     
+    
     info_processo = Processo(info_inicial["info_processo"]["processo"],
                             info_inicial["info_processo"]["fornecedor"],
                             info_inicial["info_processo"]["cnpj"],
