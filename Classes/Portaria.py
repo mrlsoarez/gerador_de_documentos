@@ -1,6 +1,9 @@
+
 from Classes.Documento import Documento
 from Entities.Fiscal import Fiscal
+
 from Services.Number import pegar_numero_extenso
+
 from docx import Document
 
 # Onde eu parei: definir o documento de portaria utilizando como base o modelo pronto
@@ -67,7 +70,7 @@ class Portaria(Documento):
         def adicionar_titulo():
             doc.paragraphs[1].text = ""
             titulo = doc.paragraphs[1]
-            texto = f"Portaria N° XXX - {Documento.encontrar_data_de_hoje_em_extenso()}"
+            texto = f"Portaria N° XXX/2026 - {Documento.encontrar_data_de_hoje_em_extenso()}"
             Documento.criar_texto(titulo, texto, negrito = True, posicionamento="Centro", fonte = "Arial")
         
         def adicionar_codigo_tce():

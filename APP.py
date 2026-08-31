@@ -44,13 +44,14 @@ def iniciar(sheet):
                 "matricula": sheet["B17"].value,
                 "decreto": sheet["B18"].value,
                 "data": sheet["B19"].value,
+                "cargo": sheet["B20"].value
             },
             "modulos": {
-                "portaria": {"inicializar_modulo": sheet["B22"].value, "classe": Portaria, "planilha": f"{enderecos['planilhas']}\PORTARIA.xlsx"},
-                "termo_aditivo": {"inicializar_modulo": sheet["B23"].value, "classe": ""},
-                "contrato": {"inicializar_modulo": sheet["B24"].value, "classe": Contrato, "planilha": f"{enderecos['planilhas']}\CONTRATO.xlsx"},
-                "apostilamento": {"inicializar_modulo": sheet["B25"].value, "classe": Apostilamento, "planilha": f"{enderecos['planilhas']}\APOSTILAMENTO.xlsx"},
-                "reequilibrio": {"inicializar_modulo": sheet["B26"].value, "classe": ""}
+                "portaria": {"inicializar_modulo": sheet["B23"].value, "classe": Portaria, "planilha": f"{enderecos['planilhas']}\PORTARIA.xlsx"},
+                "termo_aditivo": {"inicializar_modulo": sheet["B24"].value, "classe": ""},
+                "contrato": {"inicializar_modulo": sheet["B25"].value, "classe": Contrato, "planilha": f"{enderecos['planilhas']}\CONTRATO.xlsx"},
+                "apostilamento": {"inicializar_modulo": sheet["B26"].value, "classe": Apostilamento, "planilha": f"{enderecos['planilhas']}\APOSTILAMENTO.xlsx"},
+                "reequilibrio": {"inicializar_modulo": sheet["B27"].value, "classe": ""}
             }
         }
     
@@ -72,11 +73,12 @@ def iniciar(sheet):
                                  info_inicial["info_secretaria"]["cnpj"],
                                  info_inicial["info_secretaria"]["matricula"],
                                  info_inicial["info_secretaria"]["decreto"],
-                                 info_inicial["info_secretaria"]["data"]) 
+                                 info_inicial["info_secretaria"]["data"],
+                                 info_inicial["info_secretaria"]["cargo"])
     
     if (info_inicial["modulos"]["portaria"]["inicializar_modulo"]):
         array = []
-        contador = 28
+        contador = 29
         while True: 
             if (sheet["A" + str(contador)].value == None):
                 break

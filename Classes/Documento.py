@@ -34,6 +34,11 @@ class Documento:
         texto.font.size = Pt(px)
 
     @staticmethod
+    def adicionar_espaco(doc, vezes):
+        for i in range(vezes): 
+            doc.add_paragraph()
+            
+    @staticmethod
     def criar_texto(paragrafo, texto, negrito = False, posicionamento = None, px = None, fonte = None):
 
         def deixar_negrito(run): 
@@ -67,7 +72,7 @@ class Documento:
         Documento.criar_texto(paragrafo, f"________________________________________\n{assinador}", negrito = True, posicionamento = "Centro", fonte = "Arial")
     
     @staticmethod
-    def modificar_tabela(tabela, dados, fonte = "Cambria"): 
+    def modificar_tabela(tabela, dados, fonte = "Arial", px = 10): 
 
         for i in range(len(dados)):
 
@@ -76,7 +81,7 @@ class Documento:
             celula = tabela.cell(dado["celula"][0], dado["celula"][1])
             paragrafo = celula.paragraphs[0]  
 
-            Documento.criar_texto(paragrafo, dado["conteudo"], dado["negrito"], fonte, px = 10)
+            Documento.criar_texto(paragrafo, dado["conteudo"], dado["negrito"], fonte, px)
 
         return tabela
     

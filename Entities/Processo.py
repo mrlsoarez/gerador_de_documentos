@@ -1,7 +1,9 @@
+from Services.CNPJ import formatar_cnpj
+
 class Processo:
     def __init__(self, processo, cnpj, fornecedor, modalidade, n_modalidade, n_contrato, objeto):
         self.n_processo = processo 
-        self.cnpj = cnpj
+        self.cnpj = formatar_cnpj(cnpj)
         self.fornecedor = fornecedor 
         self.modalidade = modalidade 
         self.n_modalidade = n_modalidade
