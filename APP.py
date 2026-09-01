@@ -13,6 +13,7 @@ from Classes.Documento import Documento
 from Classes.Apostilamento import Apostilamento
 from Classes.Portaria import Portaria
 from Classes.Contrato import Contrato
+from Classes.TermoAditivo import TermoAditivo
 
 def env():
     return {
@@ -44,14 +45,15 @@ def iniciar(sheet):
                 "matricula": sheet["B17"].value,
                 "decreto": sheet["B18"].value,
                 "data": sheet["B19"].value,
-                "cargo": sheet["B20"].value
+                "cargo": sheet["B20"].value, 
+                "endereco": sheet["B21"].value
             },
             "modulos": {
-                "portaria": {"inicializar_modulo": sheet["B23"].value, "classe": Portaria, "planilha": f"{enderecos['planilhas']}\PORTARIA.xlsx"},
-                "termo_aditivo": {"inicializar_modulo": sheet["B24"].value, "classe": ""},
-                "contrato": {"inicializar_modulo": sheet["B25"].value, "classe": Contrato, "planilha": f"{enderecos['planilhas']}\CONTRATO.xlsx"},
-                "apostilamento": {"inicializar_modulo": sheet["B26"].value, "classe": Apostilamento, "planilha": f"{enderecos['planilhas']}\APOSTILAMENTO.xlsx"},
-                "reequilibrio": {"inicializar_modulo": sheet["B27"].value, "classe": ""}
+                "portaria": {"inicializar_modulo": sheet["B24"].value, "classe": Portaria, "planilha": f"{enderecos['planilhas']}\PORTARIA.xlsx"},
+                "termo_aditivo": {"inicializar_modulo": sheet["B25"].value, "classe": TermoAditivo, "planilha": f"{enderecos['planilhas']}\TERMO_ADITIVO.xlsx"},
+                "contrato": {"inicializar_modulo": sheet["B26"].value, "classe": Contrato, "planilha": f"{enderecos['planilhas']}\CONTRATO.xlsx"},
+                "apostilamento": {"inicializar_modulo": sheet["B27"].value, "classe": Apostilamento, "planilha": f"{enderecos['planilhas']}\APOSTILAMENTO.xlsx"},
+                "reequilibrio": {"inicializar_modulo": sheet["B28"].value, "classe": ""}
             }
         }
     
@@ -74,7 +76,8 @@ def iniciar(sheet):
                                  info_inicial["info_secretaria"]["matricula"],
                                  info_inicial["info_secretaria"]["decreto"],
                                  info_inicial["info_secretaria"]["data"],
-                                 info_inicial["info_secretaria"]["cargo"])
+                                 info_inicial["info_secretaria"]["cargo"],
+                                 info_inicial["info_secretaria"]["endereco"])
     
     if (info_inicial["modulos"]["portaria"]["inicializar_modulo"]):
         array = []

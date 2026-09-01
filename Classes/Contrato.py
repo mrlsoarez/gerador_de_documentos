@@ -44,7 +44,7 @@ class Contrato:
             "cnpj": sheet["B4"].value,
             "modalidade": sheet["B5"].value,
             "n_modalidade": sheet["B6"].value, 
-            "objeto": sheet["B8"].value,
+            "objeto": sheet["B7"].value,
         }
         
         self.set_info_processo()   
@@ -88,18 +88,20 @@ class Contrato:
         processo = self.processo 
         secretaria = self.secretaria
         
-        self.set_info_contratada()
+        #self.set_info_contratada()
         
         def definir_cabecalho(): 
             texto = f"CONTRATO ADMINISTRATIVO Nº {processo.n_contrato}\nPROCESSO ADMINISTRATIVO Nº {processo.n_processo}\n{processo.modalidade} Nº {processo.n_modalidade}"
             Documento.criar_texto(doc.add_paragraph(), texto, negrito = True, posicionamento="Centro", fonte = "Arial")
-            texto2 = f"CONTRATO ADMINISTRATIVO Nº {processo.n_contrato} QUE FAZEM ENTRE SI O {secretaria.fundo.upper()} E A EMPRESA {self.contratada_nome}."
+            texto2 = f"CONTRATO ADMINISTRATIVO Nº {processo.n_contrato} QUE FAZEM ENTRE SI O {secretaria.fundo.upper()} DE BATAGUASSU/MS E A EMPRESA {self.contratada_nome}."
             Documento.criar_texto(doc.add_paragraph(), texto2, negrito = True, posicionamento="Direita", fonte = "Arial")
 
         def definir_texto_inicial_contratante():
-            texto = f"O {secretaria.fundo.upper()}/MS, com sede à Avenida Aquidauana, nº 1001, Centro, Bataguassu/MS inscrito(a) no CNPJ sob o nº {secretaria.cnpj}, neste ato representado por {secretaria.nome.upper()}, {secretaria.cargo.upper()}, nomeada pelo Decreto nº {secretaria.decreto}, de {secretaria.data}, portadora da Matrícula Funcional nº {secretaria.matricula}, doravante denominada CONTRATANTE"
+            texto = (f"O {secretaria.fundo.upper()}/MS, pessoa jurídica de direito público interno, inscrito(a) no CNPJ sob o nº {secretaria.cnpj}, " 
+                     f"situado a {secretaria.endereco}, Município de Bataguassu/MS, neste ato representado, conforme Decreto nº {secretaria.decreto} de {secretaria.data}, " 
+                     f"pela Sra. {secretaria.nome}, {secretaria.cargo}, portadora da Matrícula Funcional nº {secretaria.matricula}, doravante denominada CONTRATANTE")
             if (secretaria.fundo.upper() == "MUNICIPIO DE BATAGUASSU"):
-                texto = f"O {secretaria.fundo.upper()}/MS, com sede à Avenida Aquidauana, nº 1001, Centro, Bataguassu/MS inscrito(a) no CNPJ sob o nº {secretaria.cnpj}, neste ato representado, por {secretaria.nome.upper()}, {secretaria.cargo.upper()}, portadora da Matrícula Funcional nº {secretaria.matricula}, doravante denominada CONTRATANTE"
+                texto = f"O {secretaria.fundo.upper()}/MS, pessoa jurídica de direito público interno, com sede à Avenida Aquidauana, nº 1001, Centro, Bataguassu/MS inscrito(a) no CNPJ sob o nº {secretaria.cnpj}, neste ato representado, por {secretaria.nome.upper()}, {secretaria.cargo.upper()}, portadora da Matrícula Funcional nº {secretaria.matricula}, doravante denominada CONTRATANTE"
             Documento.criar_texto(doc.add_paragraph(), texto, negrito = False, posicionamento="Esquerda", fonte = "Arial")
  
         def definir_texto_inicial_contratada():
@@ -153,9 +155,29 @@ class Contrato:
         def adicionar_assinaturas():
             Documento.adicionar_linha_de_assinatura(doc.add_paragraph(), f"{secretaria.fundo.upper()}\n{secretaria.nome.upper()}")
             Documento.adicionar_linha_de_assinatura(doc.add_paragraph(), f"REPRESENTANTE\nCONTRATADA")
-
+        
+        def criar_extrato():
+            doc2 = Document(self.modelo)
+            Documento.criar_texto(doc2.add_paragraph(), f"EXTRATO CONTRATO ADMINISTRATIVO N° {processo.n_contrato} \nPROCESSO ADMINISTRATIVO N° {processo.n_processo} \n{processo.modalidade}N°{processo.n_modalidade}", negrito = True, posicionamento="Centro", fonte = "Arial")
+            Documento.adicionar_espaco(doc, 4)
+            Documento.criar_texto(doc2.add_paragraph(), f"PARTES: O {secretaria.fundo.upper()}/MS e a empresa exemplo", negrito = True, posicionamento="Esquerda", fonte = "Arial")
+            Documento.adicionar_espaco(doc, 4)
+            Documento.criar_texto(doc2.add_paragraph(), f"OBJETO: {processo.objeto}\n", negrito = True, posicionamento="Esquerda", fonte = "Arial")
+            Documento.adicionar_espaco(doc, 4)            
+            Documento.criar_texto(doc2.add_paragraph(), f"VIGÊNCIA: XXXXXXXXXXXXXXX\n", negrito = True, posicionamento="Esquerda", fonte = "Arial")
+            Documento.adicionar_espaco(doc, 4)                
+            Documento.criar_texto(doc2.add_paragraph(), f"PREÇO: O valor total da contratação é de {converter_currency(self.valor_total)} ({pegar_numero_extenso(self.valor_total)})\n", negrito = True, posicionamento="Esquerda", fonte = "Arial")
+            Documento.adicionar_espaco(doc, 4)            
+            Documento.criar_texto(doc2.add_paragraph(), f"DOTAÇÃO ORÇAMENTÁRIA: XXXXXXXXXXXXXXX\n", negrito = True, posicionamento="Esquerda", fonte = "Arial")
+            Documento.adicionar_espaco(doc, 4)        
+            Documento.criar_texto(doc2.add_paragraph(), f"DATA ASSINATURA: Bataguassu/MS, data de assinatura digital\n", negrito = True, posicionamento="Esquerda", fonte = "Arial")
+            Documento.adicionar_espaco(doc, 4)    
+            Documento.criar_texto(doc2.add_paragraph(), f"ASSINAM: O {secretaria.fundo.upper()}/MS e a empresa {processo.fornecedor}", negrito = True, posicionamento="Esquerda", fonte = "Arial")
+            Documento.adicionar_espaco(doc, 4)    
+            Documento.adicionar_linha_de_assinatura(doc2.add_paragraph(), "MURILO SOARES DE OLIVEIRA\nSETOR DE CONTRATOS")
+            doc2.save(rf"{self.destino}/EXTRATO CONTRATO ADM.docx")
+            
         definir_cabecalho()
-        Documento.adicionar_espaco(doc, 5)
         definir_texto_inicial_contratante()
         Documento.adicionar_espaco(doc, 5)
         definir_texto_inicial_contratada()
@@ -168,4 +190,8 @@ class Contrato:
         Documento.adicionar_espaco(doc, 5)
         adicionar_assinaturas()
         
-        doc.save(rf"{self.destino}/wanda.docx")
+        criar_extrato()
+        
+        doc.save(rf"{self.destino}/CONTRATO ADM.docx")
+
+   

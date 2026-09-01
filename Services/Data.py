@@ -1,6 +1,6 @@
 from datetime import date
 
-def EncontrarData(parametro, *args):
+def EncontrarData(parametro, data, *args):
     
     calendario = {
         "01": "JANEIRO",
@@ -17,10 +17,12 @@ def EncontrarData(parametro, *args):
         "12": "DEZEMBRO"
     }
     
+    """
     def PegarDataDeHoje():
         return str(date.today().strftime("%d/%m/20%y"))
     
     data = PegarDataDeHoje()
+    """
     
     def PegarDiaDeHoje(data):
         return data[:2]
@@ -38,4 +40,4 @@ def EncontrarData(parametro, *args):
         return PegarMes(data, args[0])
     elif (parametro == "ano"):
         return PegarAno(data)
-    
+
